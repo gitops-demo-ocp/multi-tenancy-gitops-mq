@@ -125,7 +125,25 @@ spec:
         end
         hs.status = "Progressing"
         hs.message = "Unknown"
-        return hs                       
+        return hs 
+    apps/StatefulSet:
+      health.lua:
+        hs = {}
+        if obj.status ~= nil then
+          if obj.status.updatedReplicas ~= nil then
+            if obj.status.updatedReplicas == obj.spec.replicas then
+              hs.status = "Healthy"
+              hs.message = "Running"
+            else
+              hs.status = "Progressing"
+              hs.message = "Unknown"
+            end
+            return hs
+          end
+        end
+        hs.status = "Progressing"
+        hs.message = "Unknown"
+        return hs                      
   applicationSet:
     resources:
       limits:
