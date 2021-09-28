@@ -131,7 +131,7 @@ spec:
         hs = {}
         if obj.status ~= nil then
           if obj.status.updatedReplicas ~= nil then
-            if obj.status.updatedReplicas == obj.spec.replicas then
+            if obj.status.updatedReplicas == obj.spec.replicas and obj.status.readyReplicas == 1 then
               hs.status = "Healthy"
               hs.message = "Running"
             else
